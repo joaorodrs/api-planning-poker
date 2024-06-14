@@ -1,4 +1,4 @@
-module github.com/bmdavis419/the-better-backend
+module github.com/joaorodrs/api-planning-poker
 
 go 1.19
 
@@ -7,6 +7,12 @@ require (
 	github.com/gofiber/swagger v0.1.8
 	github.com/joho/godotenv v1.4.0
 	go.mongodb.org/mongo-driver v1.11.1
+)
+
+require (
+	github.com/jinzhu/gorm v1.9.16 // indirect
+	github.com/jinzhu/inflection v1.0.0 // indirect
+	github.com/lib/pq v1.1.1 // indirect
 )
 
 require (

@@ -1,8 +1,8 @@
 package main
 
 import (
-	"github.com/bmdavis419/the-better-backend/app"
-	_ "github.com/bmdavis419/the-better-backend/docs"
+	"github.com/joaorodrs/api-planning-poker/app"
+	_ "github.com/joaorodrs/api-planning-poker/docs"
 )
 
 // @title The Better Backend Template

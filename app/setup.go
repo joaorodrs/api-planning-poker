@@ -3,12 +3,12 @@ package app
 import (
 	"os"
 
-	"github.com/bmdavis419/the-better-backend/config"
-	"github.com/bmdavis419/the-better-backend/database"
-	"github.com/bmdavis419/the-better-backend/router"
 	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/fiber/v2/middleware/logger"
 	"github.com/gofiber/fiber/v2/middleware/recover"
+	"github.com/joaorodrs/api-planning-poker/config"
+	"github.com/joaorodrs/api-planning-poker/database"
+	"github.com/joaorodrs/api-planning-poker/router"
 )
 
 func SetupAndRunApp() error {
@@ -19,13 +19,7 @@ func SetupAndRunApp() error {
 	}
 
 	// start database
-	err = database.StartMongoDB()
-	if err != nil {
-		return err
-	}
-
-	// defer closing database
-	defer database.CloseMongoDB()
+	database.Connect()
 
 	// create app
 	app := fiber.New()
