@@ -5,14 +5,14 @@ import (
 	"github.com/joaorodrs/api-planning-poker/handlers"
 )
 
-func Example(c *fiber.Ctx) error {
-	return nil
-}
-
 func SetupRoutes(app *fiber.App) {
 	app.Get("/health", handlers.HandleHealthCheck)
 
 	// setup the todos group
-	todos := app.Group("/todos")
-	todos.Get("/", Example)
+	todos := app.Group("/users")
+	todos.Get("/", handlers.HandleAllUsers)
+	todos.Get("/:id", handlers.HandleGetOneUser)
+	todos.Post("/", handlers.HandleCreateUser)
+	todos.Put("/:id", handlers.HandleUpdateUser)
+	todos.Delete("/:id", handlers.HandleDeleteUser)
 }

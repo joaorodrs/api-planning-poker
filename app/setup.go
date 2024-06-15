@@ -7,7 +7,6 @@ import (
 	"github.com/gofiber/fiber/v2/middleware/logger"
 	"github.com/gofiber/fiber/v2/middleware/recover"
 	"github.com/joaorodrs/api-planning-poker/config"
-	"github.com/joaorodrs/api-planning-poker/database"
 	"github.com/joaorodrs/api-planning-poker/router"
 )
 
@@ -17,9 +16,6 @@ func SetupAndRunApp() error {
 	if err != nil {
 		return err
 	}
-
-	// start database
-	database.Connect()
 
 	// create app
 	app := fiber.New()
