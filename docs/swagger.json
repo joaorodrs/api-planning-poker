@@ -34,9 +34,9 @@
                 }
             }
         },
-        "/todos": {
+        "/users": {
             "get": {
-                "description": "fetch every todo available.",
+                "description": "fetch all users",
                 "consumes": [
                     "*/*"
                 ],
@@ -44,144 +44,103 @@
                     "application/json"
                 ],
                 "tags": [
-                    "todos"
+                    "users"
                 ],
-                "summary": "Get all todos.",
+                "summary": "Get All Users",
                 "responses": {
                     "200": {
                         "description": "OK",
                         "schema": {
                             "type": "array",
                             "items": {
-                                "$ref": "#/definitions/models.Todo"
+                                "$ref": "#/definitions/models.User"
                             }
                         }
                     }
                 }
             },
             "post": {
-                "description": "create a single todo.",
+                "description": "create an user",
                 "consumes": [
-                    "application/json"
+                    "*/*"
                 ],
                 "produces": [
                     "application/json"
                 ],
                 "tags": [
-                    "todos"
+                    "users"
                 ],
-                "summary": "Create a todo.",
-                "parameters": [
-                    {
-                        "description": "Todo to create",
-                        "name": "todo",
-                        "in": "body",
-                        "required": true,
-                        "schema": {
-                            "$ref": "#/definitions/handlers.CreateTodoDTO"
-                        }
-                    }
-                ],
+                "summary": "Create User",
                 "responses": {
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/handlers.CreateTodoResDTO"
+                            "$ref": "#/definitions/models.User"
                         }
                     }
                 }
             }
         },
-        "/todos/:id": {
+        "/users/:id": {
             "get": {
-                "description": "fetch a single todo.",
+                "description": "get an user",
+                "consumes": [
+                    "*/*"
+                ],
                 "produces": [
                     "application/json"
                 ],
                 "tags": [
-                    "todos"
+                    "users"
                 ],
-                "summary": "Get a single todo.",
-                "parameters": [
-                    {
-                        "type": "string",
-                        "description": "Todo ID",
-                        "name": "id",
-                        "in": "path",
-                        "required": true
-                    }
-                ],
+                "summary": "Get User By ID",
                 "responses": {
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/models.Todo"
+                            "$ref": "#/definitions/models.User"
                         }
                     }
                 }
             },
             "put": {
-                "description": "update a single todo.",
+                "description": "update an user",
                 "consumes": [
-                    "application/json"
+                    "*/*"
                 ],
                 "produces": [
                     "application/json"
                 ],
                 "tags": [
-                    "todos"
+                    "users"
                 ],
-                "summary": "Update a todo.",
-                "parameters": [
-                    {
-                        "description": "Todo update data",
-                        "name": "todo",
-                        "in": "body",
-                        "required": true,
-                        "schema": {
-                            "$ref": "#/definitions/handlers.UpdateTodoDTO"
-                        }
-                    },
-                    {
-                        "type": "string",
-                        "description": "Todo ID",
-                        "name": "id",
-                        "in": "path",
-                        "required": true
-                    }
-                ],
+                "summary": "Update User",
                 "responses": {
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/handlers.UpdateTodoResDTO"
+                            "$ref": "#/definitions/models.User"
                         }
                     }
                 }
             },
             "delete": {
-                "description": "delete a single todo by id.",
+                "description": "delete an user",
+                "consumes": [
+                    "*/*"
+                ],
                 "produces": [
                     "application/json"
                 ],
                 "tags": [
-                    "todos"
+                    "users"
                 ],
-                "summary": "Delete a single todo.",
-                "parameters": [
-                    {
-                        "type": "string",
-                        "description": "Todo ID",
-                        "name": "id",
-                        "in": "path",
-                        "required": true
-                    }
-                ],
+                "summary": "Delete User",
                 "responses": {
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/handlers.DeleteTodoResDTO"
+                            "$ref": "#/definitions/models.User"
                         }
                     }
                 }
@@ -189,80 +148,28 @@
         }
     },
     "definitions": {
-        "handlers.CreateTodoDTO": {
+        "models.User": {
             "type": "object",
             "properties": {
-                "completed": {
-                    "type": "boolean"
-                },
-                "date": {
+                "created_at": {
                     "type": "string"
                 },
-                "description": {
+                "deleted_at": {
                     "type": "string"
                 },
-                "title": {
-                    "type": "string"
-                }
-            }
-        },
-        "handlers.CreateTodoResDTO": {
-            "type": "object",
-            "properties": {
-                "inserted_id": {
-                    "type": "string"
-                }
-            }
-        },
-        "handlers.DeleteTodoResDTO": {
-            "type": "object",
-            "properties": {
-                "deleted_count": {
-                    "type": "integer"
-                }
-            }
-        },
-        "handlers.UpdateTodoDTO": {
-            "type": "object",
-            "properties": {
-                "completed": {
-                    "type": "boolean"
-                },
-                "date": {
-                    "type": "string"
-                },
-                "description": {
-                    "type": "string"
-                },
-                "title": {
-                    "type": "string"
-                }
-            }
-        },
-        "handlers.UpdateTodoResDTO": {
-            "type": "object",
-            "properties": {
-                "updated_count": {
-                    "type": "integer"
-                }
-            }
-        },
-        "models.Todo": {
-            "type": "object",
-            "properties": {
-                "completed": {
-                    "type": "boolean"
-                },
-                "date": {
-                    "type": "string"
-                },
-                "description": {
+                "email": {
                     "type": "string"
                 },
                 "id": {
                     "type": "string"
                 },
-                "title": {
+                "name": {
+                    "type": "string"
+                },
+                "password": {
+                    "type": "string"
+                },
+                "updated_at": {
                     "type": "string"
                 }
             }
