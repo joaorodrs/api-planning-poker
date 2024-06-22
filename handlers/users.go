@@ -12,7 +12,7 @@ import (
 
 // @Summary Get All Users
 // @Description fetch all users
-// @Tags users
+// @Tags Users
 // @Accept */*
 // @Produce json
 // @Success 200 {object} []models.User
@@ -53,6 +53,14 @@ func HandleCreateUser(c *fiber.Ctx) error {
 	if err := c.BodyParser(CreateUser); err != nil {
 		return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{"Bad request": err.Error()})
 	}
+
+	hashedPassword, err := utils.HashPassword(CreateUser.Password)
+
+	if err != nil {
+		return err
+	}
+
+	CreateUser.Password = hashedPassword
 
 	user := CreateUser.CreateUser()
 
