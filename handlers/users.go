@@ -1,11 +1,13 @@
 package handlers
 
 import (
+	"fmt"
 	"strconv"
 
 	"github.com/gofiber/fiber/v2"
 
 	"github.com/joaorodrs/api-planning-poker/models"
+	"github.com/joaorodrs/api-planning-poker/utils"
 )
 
 // @Summary Get All Users
@@ -16,11 +18,34 @@ import (
 // @Success 200 {object} []models.User
 // @Router /users [get]
 func HandleAllUsers(c *fiber.Ctx) error {
-	users := models.GetAllUsers()
+	PageStr := c.Query("Page", "1")
+	Page, err := strconv.Atoi(PageStr)
+	if err != nil {
+		return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{"Message": "Could not convert Page param"})
+	}
+	TakeStr := c.Query("Take", "10")
+	Take, err := strconv.Atoi(TakeStr)
+	if err != nil {
+		return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{"Message": "Could not convert Take param"})
+	}
 
-	return c.Status(fiber.StatusOK).JSON(users)
+	fmt.Println(Page)
+	fmt.Println(Take)
+
+	Pagination := &utils.Pagination{Page: Page, Take: Take}
+
+	users, pagination := models.GetAllUsers(Pagination)
+
+	return c.Status(fiber.StatusOK).JSON(fiber.Map{"data": users, "pagination": pagination})
 }
 
+// @Summary Create User
+// @Description create an user
+// @Tags users
+// @Accept */*
+// @Produce json
+// @Success 200 {object} models.User
+// @Router /users [post]
 func HandleCreateUser(c *fiber.Ctx) error {
 	CreateUser := &models.User{}
 
@@ -33,6 +58,13 @@ func HandleCreateUser(c *fiber.Ctx) error {
 	return c.Status(fiber.StatusOK).JSON(user)
 }
 
+// @Summary Update User
+// @Description update an user
+// @Tags users
+// @Accept */*
+// @Produce json
+// @Success 200 {object} models.User
+// @Router /users/:id [put]
 func HandleUpdateUser(c *fiber.Ctx) error {
 	id := c.Params("id")
 	UpdateUser := &models.User{}
@@ -41,41 +73,37 @@ func HandleUpdateUser(c *fiber.Ctx) error {
 		return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{"Bad request": err.Error()})
 	}
 
-	userId, err := strconv.ParseInt(id, 0, 0)
-
-	if err != nil {
-		return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{"Bad request": "Could not parse ID param"})
-	}
-
-	user := models.UpdateUser(userId, *UpdateUser)
+	user := models.UpdateUser(id, *UpdateUser)
 
 	return c.Status(fiber.StatusOK).JSON(user)
 }
 
+// @Summary Get User By ID
+// @Description get an user
+// @Tags users
+// @Accept */*
+// @Produce json
+// @Success 200 {object} models.User
+// @Router /users/:id [get]
 func HandleGetOneUser(c *fiber.Ctx) error {
 	id := c.Params("id")
 
-	userId, err := strconv.ParseInt(id, 0, 0)
-
-	if err != nil {
-		return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{"Bad request": "Could not parse ID param"})
-	}
-
-	user, _ := models.GetUserById(userId)
+	user, _ := models.GetUserById(id)
 
 	return c.Status(fiber.StatusOK).JSON(user)
 }
 
+// @Summary Delete User
+// @Description delete an user
+// @Tags users
+// @Accept */*
+// @Produce json
+// @Success 200 {object} models.User
+// @Router /users/:id [delete]
 func HandleDeleteUser(c *fiber.Ctx) error {
 	id := c.Params("id")
 
-	userId, err := strconv.ParseInt(id, 0, 0)
-
-	if err != nil {
-		return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{"Bad request": "Could not parse ID param"})
-	}
-
-	models.DeleteUser(userId)
+	models.DeleteUser(id)
 
 	return c.Status(fiber.StatusOK).JSON(fiber.Map{"Message": "User deleted successfully"})
 }
