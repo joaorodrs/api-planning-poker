@@ -8,15 +8,10 @@ import (
 	"github.com/gofiber/fiber/v2/middleware/recover"
 	"github.com/joaorodrs/api-planning-poker/config"
 	"github.com/joaorodrs/api-planning-poker/router"
+	_ "github.com/joho/godotenv/autoload"
 )
 
 func SetupAndRunApp() error {
-	// load env
-	err := config.LoadENV()
-	if err != nil {
-		return err
-	}
-
 	// create app
 	app := fiber.New()
 

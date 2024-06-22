@@ -1,6 +1,8 @@
 package database
 
 import (
+	"os"
+
 	"github.com/jinzhu/gorm"
 	_ "github.com/jinzhu/gorm/dialects/postgres"
 )
@@ -10,7 +12,8 @@ var (
 )
 
 func Connect() {
-	d, err := gorm.Open("postgres", "host=localhost user=postgres password=password dbname=planning_poker port=5432 sslmode=disable TimeZone=America/Sao_Paulo")
+	dns := os.Getenv("DB_URL")
+	d, err := gorm.Open("postgres", dns)
 	if err != nil {
 		panic(err)
 	}
