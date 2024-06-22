@@ -59,8 +59,15 @@ paths:
       - users
     post:
       consumes:
-      - '*/*'
+      - application/json
       description: create an user
+      parameters:
+      - description: User payload
+        in: body
+        name: user
+        required: true
+        schema:
+          $ref: '#/definitions/models.User'
       produces:
       - application/json
       responses:

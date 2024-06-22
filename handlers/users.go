@@ -41,8 +41,9 @@ func HandleAllUsers(c *fiber.Ctx) error {
 
 // @Summary Create User
 // @Description create an user
+// @Param user body models.User true "User payload"
 // @Tags users
-// @Accept */*
+// @Accept json
 // @Produce json
 // @Success 200 {object} models.User
 // @Router /users [post]

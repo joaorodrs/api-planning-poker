@@ -68,7 +68,7 @@ const docTemplate = `{
             "post": {
                 "description": "create an user",
                 "consumes": [
-                    "*/*"
+                    "application/json"
                 ],
                 "produces": [
                     "application/json"
@@ -77,6 +77,17 @@ const docTemplate = `{
                     "users"
                 ],
                 "summary": "Create User",
+                "parameters": [
+                    {
+                        "description": "User payload",
+                        "name": "user",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/models.User"
+                        }
+                    }
+                ],
                 "responses": {
                     "200": {
                         "description": "OK",
@@ -193,8 +204,6 @@ var SwaggerInfo = &swag.Spec{
 	Description:      "An example template of a Golang backend API using Fiber and MongoDB",
 	InfoInstanceName: "swagger",
 	SwaggerTemplate:  docTemplate,
-	LeftDelim:        "{{",
-	RightDelim:       "}}",
 }
 
 func init() {
