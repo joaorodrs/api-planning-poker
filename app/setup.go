@@ -7,6 +7,7 @@ import (
 	"github.com/gofiber/fiber/v2/middleware/logger"
 	"github.com/gofiber/fiber/v2/middleware/recover"
 	"github.com/joaorodrs/api-planning-poker/config"
+	"github.com/joaorodrs/api-planning-poker/database"
 	"github.com/joaorodrs/api-planning-poker/router"
 	_ "github.com/joho/godotenv/autoload"
 )
@@ -26,6 +27,9 @@ func SetupAndRunApp() error {
 
 	// attach swagger
 	config.AddSwaggerRoutes(app)
+
+	// connect redis
+	database.ConnectRedis()
 
 	// get the port and start
 	port := os.Getenv("PORT")
