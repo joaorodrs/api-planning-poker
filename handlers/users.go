@@ -1,7 +1,6 @@
 package handlers
 
 import (
-	"fmt"
 	"strconv"
 
 	"github.com/gofiber/fiber/v2"
@@ -33,9 +32,8 @@ func HandleAllUsers(c *fiber.Ctx) error {
 
 	users, pagination := models.GetAllUsers(Pagination)
 
-	user := c.Locals("user")
-
-	fmt.Println(user)
+	// user := c.Locals("user")
+	// details, ok := user.(*models.User)
 
 	return c.Status(fiber.StatusOK).JSON(fiber.Map{"data": users, "pagination": pagination})
 }
