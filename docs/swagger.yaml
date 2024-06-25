@@ -27,6 +27,23 @@ info:
   title: The Better Backend Template
   version: "0.1"
 paths:
+  /auth/login:
+    get:
+      consumes:
+      - '*/*'
+      description: Log-in
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/models.User'
+            type: array
+      summary: Login
+      tags:
+      - Auth
   /health:
     get:
       consumes:
@@ -45,6 +62,17 @@ paths:
       consumes:
       - '*/*'
       description: fetch all users
+      parameters:
+      - description: Page to seek for in users
+        in: query
+        name: page
+        required: true
+        type: integer
+      - description: How many items per page
+        in: query
+        name: take
+        required: true
+        type: integer
       produces:
       - application/json
       responses:
@@ -56,7 +84,7 @@ paths:
             type: array
       summary: Get All Users
       tags:
-      - users
+      - Users
     post:
       consumes:
       - application/json

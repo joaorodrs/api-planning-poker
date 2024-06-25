@@ -11,21 +11,23 @@ import (
 
 // @Summary Get All Users
 // @Description fetch all users
+// @Param page query int true "Page to seek for in users"
+// @Param take query int true "How many items per page"
 // @Tags Users
 // @Accept */*
 // @Produce json
 // @Success 200 {object} []models.User
 // @Router /users [get]
 func HandleAllUsers(c *fiber.Ctx) error {
-	PageStr := c.Query("Page", "1")
+	PageStr := c.Query("page", "1")
 	Page, err := strconv.Atoi(PageStr)
 	if err != nil {
-		return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{"Message": "Could not convert Page param"})
+		return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{"Message": "Could not convert page param"})
 	}
-	TakeStr := c.Query("Take", "10")
+	TakeStr := c.Query("take", "10")
 	Take, err := strconv.Atoi(TakeStr)
 	if err != nil {
-		return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{"Message": "Could not convert Take param"})
+		return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{"Message": "Could not convert take param"})
 	}
 
 	Pagination := &utils.Pagination{Page: Page, Take: Take}
