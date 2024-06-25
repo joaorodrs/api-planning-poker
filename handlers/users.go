@@ -1,7 +1,6 @@
 package handlers
 
 import (
-	"fmt"
 	"strconv"
 
 	"github.com/gofiber/fiber/v2"
@@ -28,9 +27,6 @@ func HandleAllUsers(c *fiber.Ctx) error {
 	if err != nil {
 		return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{"Message": "Could not convert Take param"})
 	}
-
-	fmt.Println(Page)
-	fmt.Println(Take)
 
 	Pagination := &utils.Pagination{Page: Page, Take: Take}
 

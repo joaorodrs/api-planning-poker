@@ -4,6 +4,7 @@ import (
 	"os"
 
 	"github.com/gofiber/fiber/v2"
+	"github.com/gofiber/fiber/v2/middleware/encryptcookie"
 	"github.com/gofiber/fiber/v2/middleware/logger"
 	"github.com/gofiber/fiber/v2/middleware/recover"
 	"github.com/joaorodrs/api-planning-poker/config"
@@ -21,6 +22,13 @@ func SetupAndRunApp() error {
 	app.Use(logger.New(logger.Config{
 		Format: "[${ip}]:${port} ${status} - ${method} ${path} ${latency}\n",
 	}))
+
+	cookieSecret := os.Getenv("COOKIE_SECRET")
+	app.Use(encryptcookie.New(encryptcookie.Config{
+		Key: cookieSecret,
+	}))
+
+	app.Use(config.SetupSecurityHeaders)
 
 	// setup routes
 	router.SetupRoutes(app)
